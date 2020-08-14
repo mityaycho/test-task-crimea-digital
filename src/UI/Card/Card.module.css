@@ -1,0 +1,25 @@
+.card {
+  border: 2px solid grey;
+  margin: 5px;
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+	display: inline-flex;
+}
+
+.logo {
+	align-self: center;
+	width: 80px;
+  height: 80px;
+}
+
+@media screen and (max-width: 450px) {
+	.card {
+		width: 40px;
+  height: 40px;
+	}
+	.logo {
+		width: 40px;
+		height: 40px;
+	}
+}
