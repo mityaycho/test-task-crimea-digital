@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ddac4cf7867b0b5dea3fb8e4f1aca29f",
+    "revision": "051e8362b1091be6da652745d65dd4ae",
     "url": "/test-task-crimea-digital/index.html"
   },
   {
