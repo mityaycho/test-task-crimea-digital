@@ -1,30 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppStateType } from '../../DAL/store';
 import Card from '../Card/Card';
 import styles from './App.module.css';
 import Button from '../Button/Button';
-import { levelUpAC } from '../../BLL/actions';
+import { levelUpAC, setActiveClassAC, guessedCardsAC } from '../../BLL/actions';
+import { activeGameAC } from './../../BLL/actions';
 
 const App = () => {
 
 	const dispatch = useDispatch();
-	const cardsClass = useSelector((state: AppStateType) => state.cardsReducer.cardsClass);
-	const cardsColor = useSelector((state: AppStateType) => state.cardsReducer.cardsColor);
+	const { cards, cardsClass, activeCard } = useSelector((state: AppStateType) => state.cardsReducer);
 	const [activeGame, setActiveGame] = useState(false);
 
-	cardsColor.sort(() => Math.random() - 0.5);
-
 	const clickHandler = (e: any) => {
-		console.log(e.currentTarget.dataset.value);
-	}
+		const id = e.currentTarget.id;
+		const value = e.currentTarget.dataset.value;
+		if (activeCard.color === value) {
+			dispatch(guessedCardsAC(activeCard.id, id));
+		} else {
+			dispatch(setActiveClassAC(id, value));
+		}
+		console.log(value);
+	};
 
-	const cardsJSX = cardsColor.map((el, i) => <Card
-		key={i}
-		color={{ background: el }}
-		clickHandler={clickHandler}
-		value={el}
-		active="active" />);
+	const cardsJSX = cards.map((el, i) => {
+
+		return (
+			<Card
+				key={i}
+				id={i}
+				color={{ background: el.color }}
+				clickHandler={clickHandler}
+				value={el.color}
+				active={el.activeClass}
+				opacity={el.opacity}
+			/>
+		);
+	});
+
+	const setNextLevel = useCallback(() => dispatch(levelUpAC('levelUp')), [dispatch]);
 
 	return (
 		<div className={styles.App}>
@@ -33,8 +48,13 @@ const App = () => {
 					{cardsJSX}
 				</div>
 			}
-			{!activeGame && <Button title="active game" onClick={() => setActiveGame(true)} />}
-			{activeGame && <Button title="next level" onClick={() => dispatch(levelUpAC('levelUp'))} />}
+			{!activeGame && <Button title="active game"
+				onClick={() => {
+					setActiveGame(true);
+					dispatch(activeGameAC());
+				}
+				} />}
+			{activeGame && <Button title="next level" onClick={setNextLevel} />}
 		</div>
 	);
 };
