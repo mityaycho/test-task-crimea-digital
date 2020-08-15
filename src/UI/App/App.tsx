@@ -4,7 +4,7 @@ import { AppStateType } from '../../DAL/store';
 import Card from '../Card/Card';
 import styles from './App.module.css';
 import Button from '../Button/Button';
-import { levelUpAC, setActiveClassAC, guessedCardsAC } from '../../BLL/actions';
+import { levelUpAC, setActiveClassAC, guessedCardsAC, resetCardsAC, resetLevelAC } from '../../BLL/actions';
 import { activeGameAC } from './../../BLL/actions';
 
 const App = () => {
@@ -13,33 +13,40 @@ const App = () => {
 	const { cards, cardsClass, activeCard } = useSelector((state: AppStateType) => state.cardsReducer);
 	const [activeGame, setActiveGame] = useState(false);
 
-	const clickHandler = (e: any) => {
+	const clickCard = useCallback((e: any) => {
 		const id = e.currentTarget.id;
 		const value = e.currentTarget.dataset.value;
-		if (activeCard.color === value) {
+
+		if (activeCard.color !== '' && activeCard.color === value) {
 			dispatch(guessedCardsAC(activeCard.id, id));
+		} else if (activeCard.color !== '' && activeCard.color !== value) {
+			dispatch(setActiveClassAC(id, value));
+			setTimeout(() => dispatch(resetCardsAC(activeCard.id, id)), 300);
 		} else {
 			dispatch(setActiveClassAC(id, value));
 		}
-		console.log(value);
-	};
+	}, [cards, cardsClass, activeCard]);
 
-	const cardsJSX = cards.map((el, i) => {
+	const activeGameButton = useCallback(() => {
+		setActiveGame(true);
+		dispatch(activeGameAC());
+	}, [setActiveGame, dispatch])
 
-		return (
-			<Card
-				key={i}
-				id={i}
-				color={{ background: el.color }}
-				clickHandler={clickHandler}
-				value={el.color}
-				active={el.activeClass}
-				opacity={el.opacity}
-			/>
-		);
-	});
+	const nextLevelButton = useCallback(() => dispatch(levelUpAC('levelUp')), [dispatch]);
 
-	const setNextLevel = useCallback(() => dispatch(levelUpAC('levelUp')), [dispatch]);
+	const resetLevelButton = useCallback(() => dispatch(resetLevelAC()), [dispatch]);
+
+	const cardsJSX = cards.map((el, i) =>
+		<Card
+			key={i}
+			id={i}
+			color={{ background: el.color }}
+			clickCard={clickCard}
+			value={el.color}
+			active={el.activeClass}
+			opacity={el.opacity}
+		/>
+	);
 
 	return (
 		<div className={styles.App}>
@@ -48,13 +55,17 @@ const App = () => {
 					{cardsJSX}
 				</div>
 			}
-			{!activeGame && <Button title="active game"
-				onClick={() => {
-					setActiveGame(true);
-					dispatch(activeGameAC());
-				}
-				} />}
-			{activeGame && <Button title="next level" onClick={setNextLevel} />}
+			{!activeGame &&
+				<Button
+					title="active game"
+					onClick={activeGameButton}
+				/>
+			}
+			{activeGame &&
+				<>
+					<Button title="next level" onClick={nextLevelButton} />
+					<Button title="reset level" onClick={resetLevelButton} />
+				</>}
 		</div>
 	);
 };

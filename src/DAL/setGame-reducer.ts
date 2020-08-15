@@ -1,5 +1,12 @@
-import { LEVEL_UP, ACTIVE_GAME, SET_ACTIVE_CLASS, GUESSED_CARDS, ActionsType } from "../BLL/actions";
-
+import {
+	LEVEL_UP,
+	ACTIVE_GAME,
+	SET_ACTIVE_CLASS,
+	GUESSED_CARDS,
+	ActionsType,
+	RESET_CARDS,
+	RESET_LEVEL
+} from "../BLL/actions";
 
 
 const initialState = {
@@ -25,37 +32,63 @@ const initialState = {
 	activeCard: { id: '', color: '' }
 };
 
+
 export const cardsReducer = (state = initialState, action: ActionsType) => {
+
 	switch (action.type) {
 		case ACTIVE_GAME:
 			return {
 				...state, cards: state.cards.sort(() => Math.random() - 0.5)
-			}
-		case SET_ACTIVE_CLASS:
+			};
 
+		case SET_ACTIVE_CLASS:
 			return {
 				...state,
 				cards: state.cards.map((el, i) => i === +action.classActive ?
 					{ color: el.color, activeClass: 'active', opacity: '' } :
 					el),
 				activeCard: { id: action.classActive, color: action.color }
-			}
+			};
+
 		case GUESSED_CARDS:
 			return {
 				...state,
 				cards: state.cards.map((el, i) => i === +action.idFirst || i === +action.idNext ?
 					{ color: el.color, activeClass: 'active', opacity: 'disabled' } :
-					el)
-			}
+					el),
+				activeCard: { id: '', color: '' }
+			};
+
+		case RESET_CARDS:
+			return {
+				...state,
+				cards: state.cards.map((el, i) => i === +action.idFirst || i === +action.idNext ?
+					{ color: el.color, activeClass: '', opacity: '' } :
+					el),
+				activeCard: { id: '', color: '' }
+			};
+
 		case LEVEL_UP:
+			state.cards.sort(() => Math.random() - 0.5);
+			const resetActive = state.cards.map(el => ({ color: el.color, activeClass: '', opacity: '' }));
+
+			return {
+				...state,
+				cardsClass: action.cardsClass,
+				cards: [
+					...resetActive,
+					...resetActive
+				]
+			};
+
+		case RESET_LEVEL:
 			state.cards.sort(() => Math.random() - 0.5);
 			return {
 				...state,
-				cards: [
-					...state.cards.map(el => ({ color: el.color, activeClass: '', opacity: '' })),
-					...state.cards.map(el => ({ color: el.color, activeClass: '', opacity: '' }))
-				], cardsClass: action.cardsClass
-			}
+				cards: state.cards.map(el => ({ color: el.color, activeClass: '', opacity: '' })),
+				activeCard: { id: '', color: '' }
+			};
+
 		default:
 			return state;
 	};
