@@ -1,10 +1,18 @@
-.card {
+.container {
 	border: 2px solid grey;
 	margin: 5px;
 	width: 80px;
+	height: 80px;
+	display: inline-flex;
+}
+
+.card {
+	position: relative;
+	width: 80px;
+	height: 80px;
 	overflow: hidden;
 	display: inline-flex;
-	opacity: 0.1;
+	opacity: 0;
 }
 
 .card:hover {
@@ -12,7 +20,7 @@
 }
 
 .logo {
-	border: 1px solid grey;
+	position: absolute;
 	width: 78px;
 	height: 78px;
 }
@@ -22,13 +30,8 @@
 	pointer-events: none;
 }
 
-.noActive {
-	opacity: 0.1;
-	pointer-events: none;
-}
-
 .disabled {
-	opacity: 0.5;
+	opacity: 0.3;
 }
 
 @media screen and (max-width: 450px) {

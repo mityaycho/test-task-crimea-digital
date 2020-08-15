@@ -4,6 +4,8 @@ export const SET_ACTIVE_CLASS = 'setGame-reducer/SET_ACTIVE_CLASS';
 export const GUESSED_CARDS = 'setGame-reducer/GUESSED_CARDS';
 export const RESET_CARDS = 'setGame-reducer/RESET_CARDS';
 export const RESET_LEVEL = 'setGame-reducer/RESET_LEVEL';
+export const SET_ALL_ACTIVE_CLASS = 'setGame-reducer/SET_ALL_ACTIVE_CLASS';
+export const DISABLE_ALL_ACTIVE_CLASS = 'setGame-reducer/DISABLE_ALL_ACTIVE_CLASS';
 
 
 type ActiveGameACType = {
@@ -55,9 +57,22 @@ type ResetLevelACtype = {
 };
 export const resetLevelAC = (): ResetLevelACtype => ({ type: RESET_LEVEL });
 
+type SetAllActiveClassACType = {
+	type: typeof SET_ALL_ACTIVE_CLASS;
+};
+export const setAllActiveClassAC = (): SetAllActiveClassACType => ({ type: SET_ALL_ACTIVE_CLASS });
+
+type DisableAllActiveClassACType = {
+	type: typeof DISABLE_ALL_ACTIVE_CLASS;
+};
+export const DisableAllActiveClassAC = (): DisableAllActiveClassACType => ({ type: DISABLE_ALL_ACTIVE_CLASS });
+
+
 export type ActionsType = LevelUpACType |
 	ActiveGameACType |
 	SetActiveClassACType |
 	GuessedCardsACType |
 	ResetCardsACType |
-	ResetLevelACtype;
+	ResetLevelACtype |
+	SetAllActiveClassACType |
+	DisableAllActiveClassACType;

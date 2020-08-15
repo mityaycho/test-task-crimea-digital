@@ -5,7 +5,9 @@ import {
 	GUESSED_CARDS,
 	ActionsType,
 	RESET_CARDS,
-	RESET_LEVEL
+	RESET_LEVEL,
+	SET_ALL_ACTIVE_CLASS,
+	DISABLE_ALL_ACTIVE_CLASS
 } from "../BLL/actions";
 
 
@@ -38,7 +40,7 @@ export const cardsReducer = (state = initialState, action: ActionsType) => {
 	switch (action.type) {
 		case ACTIVE_GAME:
 			return {
-				...state, cards: state.cards.sort(() => Math.random() - 0.5)
+				...state
 			};
 
 		case SET_ACTIVE_CLASS:
@@ -82,11 +84,23 @@ export const cardsReducer = (state = initialState, action: ActionsType) => {
 			};
 
 		case RESET_LEVEL:
-			state.cards.sort(() => Math.random() - 0.5);
 			return {
 				...state,
 				cards: state.cards.map(el => ({ color: el.color, activeClass: '', opacity: '' })),
 				activeCard: { id: '', color: '' }
+			};
+
+		case SET_ALL_ACTIVE_CLASS:
+			state.cards.sort(() => Math.random() - 0.5);
+			return {
+				...state,
+				cards: state.cards.map(el => ({ color: el.color, activeClass: 'active', opacity: '' }))
+			};
+
+		case DISABLE_ALL_ACTIVE_CLASS:
+			return {
+				...state,
+				cards: state.cards.map(el => ({ color: el.color, activeClass: '', opacity: '' }))
 			};
 
 		default:

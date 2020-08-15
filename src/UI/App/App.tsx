@@ -4,7 +4,7 @@ import { AppStateType } from '../../DAL/store';
 import Card from '../Card/Card';
 import styles from './App.module.css';
 import Button from '../Button/Button';
-import { levelUpAC, setActiveClassAC, guessedCardsAC, resetCardsAC, resetLevelAC } from '../../BLL/actions';
+import { levelUpAC, setActiveClassAC, guessedCardsAC, resetCardsAC, resetLevelAC, setAllActiveClassAC, DisableAllActiveClassAC } from '../../BLL/actions';
 import { activeGameAC } from './../../BLL/actions';
 
 const App = () => {
@@ -13,9 +13,9 @@ const App = () => {
 	const { cards, cardsClass, activeCard } = useSelector((state: AppStateType) => state.cardsReducer);
 	const [activeGame, setActiveGame] = useState(false);
 
-	const clickCard = useCallback((e: any) => {
+	const clickCard = useCallback((e: React.FormEvent<HTMLInputElement>) => {
 		const id = e.currentTarget.id;
-		const value = e.currentTarget.dataset.value;
+		const value = e.currentTarget.dataset.value !== undefined ? e.currentTarget.dataset.value : '';
 
 		if (activeCard.color !== '' && activeCard.color === value) {
 			dispatch(guessedCardsAC(activeCard.id, id));
@@ -29,10 +29,25 @@ const App = () => {
 
 	const activeGameButton = useCallback(() => {
 		setActiveGame(true);
-		dispatch(activeGameAC());
-	}, [setActiveGame, dispatch])
+		dispatch(setAllActiveClassAC());
 
-	const nextLevelButton = useCallback(() => dispatch(levelUpAC('levelUp')), [dispatch]);
+		setTimeout(() => {
+			dispatch(DisableAllActiveClassAC());
+			dispatch(activeGameAC());
+		}, 5000);
+
+	}, [setActiveGame, dispatch]);
+
+	const nextLevelButton = useCallback(() => {
+		dispatch(levelUpAC('levelUp'));
+		dispatch(setAllActiveClassAC());
+
+		setTimeout(() => {
+			dispatch(DisableAllActiveClassAC());
+			dispatch(activeGameAC());
+		}, 1000);
+
+	}, [dispatch]);
 
 	const resetLevelButton = useCallback(() => dispatch(resetLevelAC()), [dispatch]);
 
