@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "92e001a1b051cff786a94a71581c38c8",
+    "revision": "ddac4cf7867b0b5dea3fb8e4f1aca29f",
     "url": "/test-task-crimea-digital/index.html"
   },
   {
-    "revision": "359f4f1d5e9469ee95ec",
-    "url": "/test-task-crimea-digital/static/css/main.0089b69b.chunk.css"
+    "revision": "a393fa388b4de4509e12",
+    "url": "/test-task-crimea-digital/static/css/main.a1a66954.chunk.css"
   },
   {
-    "revision": "330736fdfd33442d3f46",
-    "url": "/test-task-crimea-digital/static/js/2.73da2f8e.chunk.js"
+    "revision": "0cc99d332373c5eeab93",
+    "url": "/test-task-crimea-digital/static/js/2.3d84578a.chunk.js"
   },
   {
     "revision": "c64c486544348f10a6d6c716950bc223",
-    "url": "/test-task-crimea-digital/static/js/2.73da2f8e.chunk.js.LICENSE.txt"
+    "url": "/test-task-crimea-digital/static/js/2.3d84578a.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "359f4f1d5e9469ee95ec",
-    "url": "/test-task-crimea-digital/static/js/main.109a4abc.chunk.js"
+    "revision": "a393fa388b4de4509e12",
+    "url": "/test-task-crimea-digital/static/js/main.fb1d1dae.chunk.js"
   },
   {
     "revision": "cbdfcffc08acd0d41cd7",
