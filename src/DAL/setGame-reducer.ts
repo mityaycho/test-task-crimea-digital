@@ -1,7 +1,9 @@
+import { LEVEL_UP } from "../BLL/actions";
 
 
 
 const initialState = {
+	cardsClass: 'cardsSixteen',
 	cardsColor: [
 		'green',
 		'green',
@@ -24,7 +26,10 @@ const initialState = {
 
 export const cardsReducer = (state = initialState, action: any) => {
 	switch(action.type) {
-
+		case LEVEL_UP:
+			return {
+				...state, cardsColor: [...state.cardsColor, ...state.cardsColor], cardsClass: action.cardsClass
+			}
 		default:
 			return state;
 	};
