@@ -7,7 +7,8 @@ import {
 	RESET_CARDS,
 	RESET_LEVEL,
 	SET_ALL_ACTIVE_CLASS,
-	DISABLE_ALL_ACTIVE_CLASS
+	DISABLE_ALL_ACTIVE_CLASS,
+	CARDS_CLASS_UP
 } from "../BLL/actions";
 
 
@@ -31,7 +32,11 @@ const initialState = {
 		{ color: 'pink', activeClass: '', opacity: '' },
 		{ color: 'pink', activeClass: '', opacity: '' }
 	],
-	activeCard: { id: '', color: '' }
+	activeCard: { id: '', color: '' },
+	levelGame: 1,
+	attempts: 16,
+	guessedCards: 0,
+	cardsOnLevel: 16
 };
 
 
@@ -49,7 +54,8 @@ export const cardsReducer = (state = initialState, action: ActionsType) => {
 				cards: state.cards.map((el, i) => i === +action.classActive ?
 					{ color: el.color, activeClass: 'active', opacity: '' } :
 					el),
-				activeCard: { id: action.classActive, color: action.color }
+				activeCard: { id: action.classActive, color: action.color },
+				attempts: state.attempts - 1
 			};
 
 		case GUESSED_CARDS:
@@ -58,7 +64,8 @@ export const cardsReducer = (state = initialState, action: ActionsType) => {
 				cards: state.cards.map((el, i) => i === +action.idFirst || i === +action.idNext ?
 					{ color: el.color, activeClass: 'active', opacity: 'disabled' } :
 					el),
-				activeCard: { id: '', color: '' }
+				activeCard: { id: '', color: '' },
+				guessedCards: state.guessedCards + 2
 			};
 
 		case RESET_CARDS:
@@ -76,18 +83,29 @@ export const cardsReducer = (state = initialState, action: ActionsType) => {
 
 			return {
 				...state,
-				cardsClass: action.cardsClass,
 				cards: [
 					...resetActive,
 					...resetActive
-				]
+				],
+				attempts: (state.cardsOnLevel + 10) * 2,
+				guessedCards: 0,
+				levelGame: state.levelGame + 1,
+				cardsOnLevel: state.cardsOnLevel * 2
+			};
+
+		case CARDS_CLASS_UP:
+			return {
+				...state,
+				cardsClass: action.cardsClass
 			};
 
 		case RESET_LEVEL:
 			return {
 				...state,
 				cards: state.cards.map(el => ({ color: el.color, activeClass: '', opacity: '' })),
-				activeCard: { id: '', color: '' }
+				activeCard: { id: '', color: '' },
+				attempts: state.cardsOnLevel,
+				guessedCards: 0
 			};
 
 		case SET_ALL_ACTIVE_CLASS:

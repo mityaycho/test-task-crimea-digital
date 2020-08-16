@@ -1,7 +1,12 @@
 import React from 'react';
 import styles from './Button.module.css';
 
-const Button = React.memo((props: any) => {
+type ButtonPropsType = {
+	onClick: () => void;
+	title: string;
+}
+
+const Button = React.memo((props: ButtonPropsType) => {
 	return (
 		<div className={styles.container}>
 			<button className={styles.button} onClick={props.onClick}>{props.title}</button>

@@ -1,5 +1,6 @@
 export const ACTIVE_GAME = 'setGame-reducer/ACTIVE_GAME';
 export const LEVEL_UP = 'setGame-reducer/LEVEL_UP';
+export const CARDS_CLASS_UP = 'setGame-reducer/CARDS_CLASS_UP';
 export const SET_ACTIVE_CLASS = 'setGame-reducer/SET_ACTIVE_CLASS';
 export const GUESSED_CARDS = 'setGame-reducer/GUESSED_CARDS';
 export const RESET_CARDS = 'setGame-reducer/RESET_CARDS';
@@ -15,9 +16,14 @@ export const activeGameAC = (): ActiveGameACType => ({ type: ACTIVE_GAME });
 
 type LevelUpACType = {
 	type: typeof LEVEL_UP;
+};
+export const levelUpAC = (): LevelUpACType => ({ type: LEVEL_UP });
+
+type CardsClassUpACType = {
+	type: typeof CARDS_CLASS_UP;
 	cardsClass: string;
 };
-export const levelUpAC = (cardsClass: string): LevelUpACType => ({ type: LEVEL_UP, cardsClass });
+export const CardsClassUpAC = (cardsClass: string): CardsClassUpACType => ({ type: CARDS_CLASS_UP, cardsClass });
 
 type SetActiveClassACType = {
 	type: typeof SET_ACTIVE_CLASS;
@@ -75,4 +81,5 @@ export type ActionsType = LevelUpACType |
 	ResetCardsACType |
 	ResetLevelACtype |
 	SetAllActiveClassACType |
-	DisableAllActiveClassACType;
+	DisableAllActiveClassACType |
+	CardsClassUpACType;

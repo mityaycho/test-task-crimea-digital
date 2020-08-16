@@ -4,18 +4,36 @@ import { AppStateType } from '../../DAL/store';
 import Card from '../Card/Card';
 import styles from './App.module.css';
 import Button from '../Button/Button';
-import { levelUpAC, setActiveClassAC, guessedCardsAC, resetCardsAC, resetLevelAC, setAllActiveClassAC, DisableAllActiveClassAC } from '../../BLL/actions';
 import { activeGameAC } from './../../BLL/actions';
+import MenuInformation from '../MenuInformation/MenuInformation';
+import {
+	levelUpAC,
+	setActiveClassAC,
+	guessedCardsAC,
+	resetCardsAC,
+	resetLevelAC,
+	setAllActiveClassAC,
+	DisableAllActiveClassAC,
+	CardsClassUpAC
+} from '../../BLL/actions';
 
 const App = () => {
 
 	const dispatch = useDispatch();
-	const { cards, cardsClass, activeCard } = useSelector((state: AppStateType) => state.cardsReducer);
+	const {
+		cards,
+		cardsClass,
+		activeCard,
+		levelGame,
+		attempts,
+		guessedCards,
+		cardsOnLevel
+	} = useSelector((state: AppStateType) => state.cardsReducer);
 	const [activeGame, setActiveGame] = useState(false);
 
-	const clickCard = useCallback((e: React.FormEvent<HTMLInputElement>) => {
+	const clickCard = useCallback((e: React.MouseEvent<HTMLInputElement>) => {
 		const id = e.currentTarget.id;
-		const value = e.currentTarget.dataset.value !== undefined ? e.currentTarget.dataset.value : '';
+		const value = e.currentTarget.dataset.value || '';
 
 		if (activeCard.color !== '' && activeCard.color === value) {
 			dispatch(guessedCardsAC(activeCard.id, id));
@@ -25,7 +43,7 @@ const App = () => {
 		} else {
 			dispatch(setActiveClassAC(id, value));
 		}
-	}, [cards, cardsClass, activeCard]);
+	}, [activeCard, dispatch]);
 
 	const activeGameButton = useCallback(() => {
 		setActiveGame(true);
@@ -39,17 +57,32 @@ const App = () => {
 	}, [setActiveGame, dispatch]);
 
 	const nextLevelButton = useCallback(() => {
-		dispatch(levelUpAC('levelUp'));
+
+		dispatch(activeGameAC());
+		dispatch(levelUpAC());
+		dispatch(setAllActiveClassAC());
+
+		switch (levelGame + 1) {
+			case 2:
+				dispatch(CardsClassUpAC('levelTwo'));
+				break;
+			case 3:
+				dispatch(CardsClassUpAC('levelThree'));
+				break;
+		}
+
+		setTimeout(() => dispatch(DisableAllActiveClassAC()), 5000);
+
+	}, [levelGame, dispatch]);
+
+	const resetLevelButton = useCallback(() => {
+		dispatch(resetLevelAC());
 		dispatch(setAllActiveClassAC());
 
 		setTimeout(() => {
 			dispatch(DisableAllActiveClassAC());
-			dispatch(activeGameAC());
-		}, 1000);
-
+		}, 5000);
 	}, [dispatch]);
-
-	const resetLevelButton = useCallback(() => dispatch(resetLevelAC()), [dispatch]);
 
 	const cardsJSX = cards.map((el, i) =>
 		<Card
@@ -65,22 +98,54 @@ const App = () => {
 
 	return (
 		<div className={styles.App}>
-			{activeGame &&
-				<div className={styles[cardsClass]}>
-					{cardsJSX}
-				</div>
-			}
-			{!activeGame &&
-				<Button
-					title="active game"
-					onClick={activeGameButton}
-				/>
-			}
-			{activeGame &&
+
+			{!activeGame && <Button title="run game" onClick={activeGameButton} />}
+
+			{attempts === 0 &&
 				<>
+					<div className={styles.gameOver}>
+						GAME OVER<br />
+						Attempts ended!<br />
+						<p className={styles.smile}>&#128561;</p>
+					</div>
+
+					<Button title="try again" onClick={resetLevelButton} />
+				</>
+			}
+
+			{guessedCards === cardsOnLevel &&
+				<>
+					<div className={styles.wonGame}>YOU ARE THE BEST!<br />&#128526;</div>
+
 					<Button title="next level" onClick={nextLevelButton} />
+				</>
+			}
+
+			{levelGame === 4 &&
+				<>
+					<div className={styles.wonGame}>YOU WIN<br />All levels comlete!<br />&#129312;</div>
+
+					<Button title="try again" onClick={resetLevelButton} />
+				</>
+			}
+
+			{activeGame && attempts !== 0 && guessedCards !== cardsOnLevel && levelGame !== 4 &&
+				<>
+					<MenuInformation
+						levelGame={levelGame}
+						attempts={attempts}
+						guessedCards={guessedCards}
+						cardsOnLevel={cardsOnLevel}
+					/>
+
+					<div className={styles[cardsClass]}>
+						{cardsJSX}
+					</div>
+
 					<Button title="reset level" onClick={resetLevelButton} />
-				</>}
+				</>
+			}
+
 		</div>
 	);
 };
