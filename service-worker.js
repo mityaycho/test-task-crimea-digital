@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/test-task-crimea-digital/precache-manifest.159ad15339a21a706985a5b13f9add5e.js"
+  "/test-task-crimea-digital/precache-manifest.7fbb6b9d2a8734e54d24011ccbc853ca.js"
 );
 
 self.addEventListener('message', (event) => {

@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/test-task-crimea-digital/static/css/main.a1a66954.chunk.css",
-    "main.js": "/test-task-crimea-digital/static/js/main.fb1d1dae.chunk.js",
-    "main.js.map": "/test-task-crimea-digital/static/js/main.fb1d1dae.chunk.js.map",
+    "main.css": "/test-task-crimea-digital/static/css/main.bf29dabf.chunk.css",
+    "main.js": "/test-task-crimea-digital/static/js/main.930f8c84.chunk.js",
+    "main.js.map": "/test-task-crimea-digital/static/js/main.930f8c84.chunk.js.map",
     "runtime-main.js": "/test-task-crimea-digital/static/js/runtime-main.8b0d36fd.js",
     "runtime-main.js.map": "/test-task-crimea-digital/static/js/runtime-main.8b0d36fd.js.map",
-    "static/js/2.3d84578a.chunk.js": "/test-task-crimea-digital/static/js/2.3d84578a.chunk.js",
-    "static/js/2.3d84578a.chunk.js.map": "/test-task-crimea-digital/static/js/2.3d84578a.chunk.js.map",
+    "static/js/2.380c17ea.chunk.js": "/test-task-crimea-digital/static/js/2.380c17ea.chunk.js",
+    "static/js/2.380c17ea.chunk.js.map": "/test-task-crimea-digital/static/js/2.380c17ea.chunk.js.map",
     "index.html": "/test-task-crimea-digital/index.html",
-    "precache-manifest.159ad15339a21a706985a5b13f9add5e.js": "/test-task-crimea-digital/precache-manifest.159ad15339a21a706985a5b13f9add5e.js",
+    "precache-manifest.7fbb6b9d2a8734e54d24011ccbc853ca.js": "/test-task-crimea-digital/precache-manifest.7fbb6b9d2a8734e54d24011ccbc853ca.js",
     "service-worker.js": "/test-task-crimea-digital/service-worker.js",
-    "static/css/main.a1a66954.chunk.css.map": "/test-task-crimea-digital/static/css/main.a1a66954.chunk.css.map",
-    "static/js/2.3d84578a.chunk.js.LICENSE.txt": "/test-task-crimea-digital/static/js/2.3d84578a.chunk.js.LICENSE.txt",
+    "static/css/main.bf29dabf.chunk.css.map": "/test-task-crimea-digital/static/css/main.bf29dabf.chunk.css.map",
+    "static/js/2.380c17ea.chunk.js.LICENSE.txt": "/test-task-crimea-digital/static/js/2.380c17ea.chunk.js.LICENSE.txt",
     "static/media/logo.svg": "/test-task-crimea-digital/static/media/logo.5d5d9eef.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.8b0d36fd.js",
-    "static/js/2.3d84578a.chunk.js",
-    "static/css/main.a1a66954.chunk.css",
-    "static/js/main.fb1d1dae.chunk.js"
+    "static/js/2.380c17ea.chunk.js",
+    "static/css/main.bf29dabf.chunk.css",
+    "static/js/main.930f8c84.chunk.js"
   ]
 }
